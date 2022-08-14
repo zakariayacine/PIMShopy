@@ -20,7 +20,7 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-Route::get('/imageUpload/{id}', [App\Http\Controllers\ImageUploadController::class, 'upload'])->name('ImageUpload');
+Route::post('/imageUpload/{id}', [App\Http\Controllers\ImageUploadController::class, 'upload'])->name('ImageUpload');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/import', [App\Http\Controllers\ShopifyCsvController::class, 'import'])->name('import');
 Route::get('/edit/{id}', [App\Http\Controllers\ShopifyCsvController::class, 'edit'])->name('edit');

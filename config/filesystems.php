@@ -14,7 +14,7 @@ return [
     */
 
     'default' => env('FILESYSTEM_DISK', 'local'),
-
+    'cloud' => env('FILESYSTEM_CLOUD', 'dropbox'),
     /*
     |--------------------------------------------------------------------------
     | Filesystem Disks
@@ -35,7 +35,10 @@ return [
             'root' => storage_path('app'),
             'throw' => false,
         ],
-
+        'dropbox' => [
+            'driver' => 'dropbox',
+            'authorization_token' => env('DROPBOX_ACCESS_TOKEN'),
+        ],
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
