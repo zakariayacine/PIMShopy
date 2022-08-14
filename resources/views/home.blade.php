@@ -30,10 +30,11 @@
                                         </div>
                                         @if($csvOne->ImageSrc === 'somthing')
                                         <div class="col-md-9">
-                                            <form action="{{route('ImageUpload', $csvOne->id)}}" enctype="multipart/form-data">
+                                            <form action="{{route('ImageUpload', $csvOne->id)}}" method="POST" enctype="multipart/form-data">
+                                            @csrf
                                                 <div class="row">
                                                 <div class="col-md-6">
-                                                <input class="form-control" type="file" id="formFile" name="image">
+                                                <input class="form-control" type="file"  name="image">
                                                 </div>
                                                 <div class="col-md-6">
                                                 <button class="btn btn-success">upload image file</button>
