@@ -80,7 +80,12 @@ class ShopifyCsvController extends Controller
     {
 
        $csv = ShopifyCsv::find($id);
-       $inputs = [
+       $pictures = [
+        'ImageSrc',
+        'ImagePosition',
+        'ImageAltText',
+    ];
+       $defaultinputs = [
         'Handle',
         'Title',
         'BodyHTML',
@@ -89,6 +94,12 @@ class ShopifyCsvController extends Controller
         'CustomProductType',
         'Tags',
         'Published',
+        'PriceInternational',
+        'CompareAtPriceInternational',
+        'Status',
+    ];
+
+    $OptionInputs = [
         'Option1Name',
         'Option1Value',
         'Option2Name',
@@ -106,10 +117,14 @@ class ShopifyCsvController extends Controller
         'VariantRequiresShipping',
         'VariantTaxable',
         'VariantBarcode',
-        'ImageSrc',
-        'ImagePosition',
-        'ImageAltText',
+        'VariantImage',
+        'VariantWeightUnit',
+        'VariantTaxCode',
+        'Costperitem',
         'GiftCard',
+    ];
+
+    $SEOInputs = [
         'SEOTitle',
         'SEODescription',
         'GoogleShoppingGoogleProductCategory',
@@ -125,15 +140,8 @@ class ShopifyCsvController extends Controller
         'GoogleShoppingCustomLabel2',
         'GoogleShoppingCustomLabel3',
         'GoogleShoppingCustomLabel4',
-        'VariantImage',
-        'VariantWeightUnit',
-        'VariantTaxCode',
-        'Costperitem',
-        'PriceInternational',
-        'CompareAtPriceInternational',
-        'Status',
-       ];
-       return view('csvs.edit', compact('csv', 'inputs'));
+    ];
+    return view('csvs.edit', compact('csv', 'defaultinputs','SEOInputs','OptionInputs', 'pictures'));
     }
 
     /**

@@ -1,20 +1,25 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">{{ __('Dashboard') }} <a class="btn btn-success float-end" href="{{route('import')}}">Import</a></div>
-
                 <div class="card-body table-responsive">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                          <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
+                          <li class="breadcrumb-item active" aria-current="page"> Liste des produits</li>
+                        </ol>
+                      </nav>
+                      <hr>
                     <table class="table">
                         <thead>
                             <tr>
                                 <th scope="col">id</th>
                                 <th scope="col">Handle</th>
                                 <th scope="col">Title</th>
-                                <th scope="col">Action</th>
+                                <th scope="col" class="text-end">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -24,31 +29,12 @@
                                 <td>{{$csvOne->Handle}}</td>
                                 <td>{{$csvOne->Title}}</td>
                                 <td>
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                            <a class="btn btn-success mr-3" href="/edit/{{$csvOne->id}}">Modify</a>
-                                        </div>
-                                        @if($csvOne->ImageSrc === 'somthing')
-                                        <div class="col-md-9">
-                                            <form action="{{route('ImageUpload', $csvOne->id)}}" method="POST" enctype="multipart/form-data">
-                                            @csrf
-                                                <div class="row">
-                                                <div class="col-md-6">
-                                                <input class="form-control" type="file"  name="image">
-                                                </div>
-                                                <div class="col-md-6">
-                                                <button class="btn btn-success">upload image file</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                        @else
-                                        <div class="col-md-9">
-                                            <img src="{{$csvOne->ImageSrc}}" height="50" width="50">
-                                        </div>
-                                        @endif
-                                    </div>
-
-
+                                    <div class="btn-group float-end" role="group" aria-label="Basic example">
+                                        <a class="btn btn-info mr-3" href="/edit/{{$csvOne->id}}"><i class="fa-solid fa-eye"></i></a>
+                                        <a class="btn btn-success mr-3" href="/edit/{{$csvOne->id}}"><i class="fa-solid fa-pen-to-square"></i></a>
+                                        <a class="btn btn-danger mr-3" href="/edit/{{$csvOne->id}}"><i class="fa-solid fa-trash-can"></i></a>
+                                      </div>
+                                    <!-- adding delete and show product and make change the table to data table-->
                                 </td>
                             </tr>
                             @endforeach

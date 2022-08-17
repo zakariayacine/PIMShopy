@@ -56,6 +56,8 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
+    'tiny_png' => env("TINIFY_API_KEY", "ZvghRHt1Dd9s0Wh9YLH1Qnqrk3N5DrsP"),
+
     'asset_url' => env('ASSET_URL'),
 
     /*
@@ -97,6 +99,7 @@ return [
 
     'fallback_locale' => 'en',
 
+    
     /*
     |--------------------------------------------------------------------------
     | Faker Locale
@@ -182,6 +185,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         App\Providers\DropboxServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -211,6 +215,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
+        'Image' => Intervention\Image\ImageManagerStatic::class,
     ])->toArray(),
 
 ];

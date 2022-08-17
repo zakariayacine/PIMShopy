@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,9 +20,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
 Auth::routes();
-Route::post('/imageUpload/{id}', [App\Http\Controllers\ImageUploadController::class, 'upload'])->name('ImageUpload');
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/import', [App\Http\Controllers\ShopifyCsvController::class, 'import'])->name('import');
-Route::get('/edit/{id}', [App\Http\Controllers\ShopifyCsvController::class, 'edit'])->name('edit');
-Route::post('/upload/file/excel',  [App\Http\Controllers\ShopifyCsvController::class, 'upload'])->name('upload');
+
+Route::middleware(['auth'])->group(function () {
+    Route::post('/imageDestroy', [App\Http\Controllers\ImageController::class, 'destroy'])->name('image.delete');
+    Route::post('/imageUpload', [App\Http\Controllers\ImageController::class, 'store'])->name('ImageUpload');
+    Route::get('/images', [App\Http\Controllers\ImageController::class, 'index'])->name('images');
+    Route::get('/images/create', [App\Http\Controllers\ImageController::class, 'create'])->name('images.import');
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/import', [App\Http\Controllers\ShopifyCsvController::class, 'import'])->name('import');
+    Route::get('/edit/{id}', [App\Http\Controllers\ShopifyCsvController::class, 'edit'])->name('edit');
+    Route::post('/upload/file/excel',  [App\Http\Controllers\ShopifyCsvController::class, 'upload'])->name('upload');
+});

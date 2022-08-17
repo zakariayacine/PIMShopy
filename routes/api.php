@@ -17,3 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/images/get', [App\Http\Controllers\ImageController::class, 'getSyncImage'])->name('images.api.get');
+Route::post('/image', [App\Http\Controllers\ImageController::class, 'updateImage'])->name('images.api.post');
