@@ -30,7 +30,7 @@
                 @foreach($images as $key => $image)
                 <div class="col-md-3" id="col-md-{{ ++$key }}">
                     <div class="card m-2 p-3">
-                        <p><b>{{str_replace("/converted/", "", $image->localUrl)}}</b></p>
+                        <p><b>{{str_replace("converted/", "", $image->localUrl)}}</b></p>
                         <hr style="margin-top: -10px !important;">
                         <img class="img-fluid mb-2 rounded mx-auto" src="{{$image->localUrl}}">
                         <form action="{{route('image.delete')}}" method="post">
@@ -39,7 +39,7 @@
                                 <div class="col-md-12">
                                     <hr style="margin-top: -3px !important;">
                                     <div class="d-grid gap-2">
-                                        <input type="hidden" value="{{$image->id}}" name="id">
+                                        <input type="hidden" value="{{$image->id}}" name="imageid">
                                         <button class="btn btn-danger btn-block">Supprimer !</button>
                                     </div>
                                 </div>
@@ -54,6 +54,9 @@
 </div>
 
 <script>
+    setTimeout(function(){
+   window.location.reload(1);
+}, 10000);
     function taillee() {
         var select = document.getElementById('taille');
         var value = select.options[select.selectedIndex].value;

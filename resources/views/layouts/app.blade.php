@@ -13,6 +13,7 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <script src="https://kit.fontawesome.com/11eef5aa61.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     <style>
@@ -88,7 +89,7 @@ rel="stylesheet"
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
-
+                                    <a class="dropdown-item" href="{{ route('settings') }}">Paramètres</a>
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
@@ -108,9 +109,9 @@ rel="stylesheet"
                 <div class="col-md-2 " id="nav">
                     <ul class="list-group list-group-light ">
                         <li class="list-group-item"><div class="d-grid gap-2"><a class="btn btn-link" href="{{route('images')}}">Bibliothèque d'image</a></div></li>
-                        <li class="list-group-item"><div class="d-grid gap-2"><a class="btn btn-link" href="#">Liste des produits</a></li>
+                        <li class="list-group-item"><div class="d-grid gap-2"><a class="btn btn-link" href="{{route('products')}}">Liste des produits</a></li>
                         <li class="list-group-item"><div class="d-grid gap-2"><a class="btn btn-link" href="{{route('import')}}"><i class="fa-solid fa-file-excel  fa-xl"> </i> Importer des produits</a></div></li>
-                        <li class="list-group-item"><div class="d-grid gap-2"><a class="btn btn-link" href="{{route('import')}}"><i class="fa-solid fa-file-excel fa-xl"> </i> Exporter des produits</a></div></li>
+                        <li class="list-group-item"><div class="d-grid gap-2"><a class="btn btn-link" href="{{route('export')}}"><i class="fa-solid fa-file-excel fa-xl"> </i> Exporter des produits</a></div></li>
                         <li class="list-group-item"><div class="d-grid gap-2"><a class="btn btn-link" href="{{route('import')}}"><i class="fa-solid fa-file-csv fa-xl"> </i> Exporter des produits</a></div></li>
                     </ul>
                 </div>

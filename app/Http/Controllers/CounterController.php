@@ -5,7 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Counter;
 use App\Http\Requests\StoreCounterRequest;
 use App\Http\Requests\UpdateCounterRequest;
-
+use App\Jobs\TinypngJob;
+use App\Models\Tinypng;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
+use Image;
 class CounterController extends Controller
 {
     /**
@@ -15,7 +20,10 @@ class CounterController extends Controller
      */
     public function index()
     {
-        //
+        $response = Http::get('https://world.openfoodfacts.org/api/v0/product/737628064502.json');
+        dd($response);
+        
+
     }
 
     /**
@@ -23,9 +31,26 @@ class CounterController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $file = $request->file('image');
+        $FristTraitement = Image::make($file);
+        $FristTraitement->resize(400, null, function ($constraint) {
+            $constraint->aspectRatio();
+        });
+        $originalName = $file->getClientOriginalName(); 
+        $watermark = public_path("/watermark/water.jpg");
+        $interImage = Image::make($watermark);
+        $interImage->insert($FristTraitement, 'center');
+        $interImage->save('./toBeTreated/'.$originalName);
+        $path = 'toBeTreated/'.$originalName;
+        $key = config('app.tiny_png');
+        TinypngJob::dispatch($path,$originalName,$key,$request->auth);
+        return response()->json([  
+            "user_id" => $request->auth,    
+            "id" => $request->id,
+            "status" => 200,
+        ]);
     }
 
     /**
@@ -47,7 +72,7 @@ class CounterController extends Controller
      */
     public function show(Counter $counter)
     {
-        //
+        return view('images.test');
     }
 
     /**

@@ -9,6 +9,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Image;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 
 class ImageController extends Controller
@@ -48,7 +49,6 @@ class ImageController extends Controller
      */
     public function store(StoreImageRequest $request)
     {
-
         if($request->file('images')){
             foreach ($request->file('images') as $image) {
                 $url = $this->storeImageCloud($image);
@@ -69,9 +69,11 @@ class ImageController extends Controller
      * @param  \App\Models\Image  $image
      * @return \Illuminate\Http\Response
      */
-    public function show(modalImage $image)
+    public function show($code)
     {
-        //
+        $response = Http::get('https://fr.openfoodfacts.org/api/v0/product/'.$code.'.json');
+        $data = json_decode($response);
+        dd($data->product);
     }
 
     /**
@@ -105,7 +107,7 @@ class ImageController extends Controller
      */
     public function destroy(Request $request)
     {
-        modalImage::find($request->id)->firstorfail()->delete();
+        modalImage::find($request->imageid)->delete();
         return redirect('/images');
     }
 
@@ -133,23 +135,26 @@ class ImageController extends Controller
 
     public function storeImageCloud($file)
     {
-
+        $FristTraitement = Image::make($file);
+        $FristTraitement->resize(400, null, function ($constraint) {
+            $constraint->aspectRatio();
+        });
         $originalName = $file->getClientOriginalName();
         $path = "/converted/" .$originalName;
         $localPath = '/converted/'.$originalName;  
         $watermark = public_path("/watermark/water.jpg");
         $interImage = Image::make($watermark);
-        $interImage->insert($file, 'center');
+        $interImage->insert($FristTraitement, 'center');
         $interImage->save('./toBeConverted/'.$originalName);
-
         $key = config('app.tiny_png');
+
         try {
             \Tinify\setKey($key);
             $source = \Tinify\fromFile('./toBeConverted/'.$originalName)
                 ->resize(array(
                     "method" => "thumb",
-                    "width" => 250,
-                    "height" => 250
+                    "width" => 400,
+                    "height" => 400
                 ));
             
             $source->toFile('./converted/'.$originalName);  
