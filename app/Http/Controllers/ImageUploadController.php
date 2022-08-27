@@ -53,8 +53,8 @@ class ImageUploadController extends Controller
             $source = \Tinify\fromFile($file)
                 ->resize(array(
                     "method" => "thumb",
-                    "width" => 250,
-                    "height" => 250
+                    "width" => 400,
+                    "height" => 400
                 ));
             $image = './converted/' . $file->getClientOriginalName();
             $source->toFile($image);

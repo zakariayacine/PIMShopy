@@ -23,7 +23,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $csv = ShopifyCsv::paginate(5);
-        return view('home', compact('csv'));
+        
+        return view('home');
     }
 }

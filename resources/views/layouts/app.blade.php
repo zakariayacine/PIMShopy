@@ -12,13 +12,42 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
+    <script src="https://kit.fontawesome.com/11eef5aa61.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    <style>
+        .hidden {
+            display: none !important;
+        }
+    
+        .activated {
+            display: block;
+        }
+    </style>
+    <!-- Font Awesome -->
+<link
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+rel="stylesheet"
+/>
+<!-- Google Fonts -->
+<link
+href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+rel="stylesheet"
+/>
+<!-- MDB -->
+<link
+href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.4.0/mdb.min.css"
+rel="stylesheet"
+/>
 </head>
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+            @guest
+            @else
+            <a onclick="hidnav()" class="btn" style="margin-left: 20px !important"><i class="fa-solid fa-bars"></i></a>
+            @endguest
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
@@ -60,7 +89,7 @@
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
-
+                                    <a class="dropdown-item" href="{{ route('settings') }}">Paramètres</a>
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
@@ -73,8 +102,41 @@
         </nav>
 
         <main class="py-4">
-            @yield('content')
+            @guest
+                @yield('content')
+            @else
+            <div class="row container-fluid">
+                <div class="col-md-2 " id="nav">
+                    <ul class="list-group list-group-light ">
+                        <li class="list-group-item"><div class="d-grid gap-2"><a class="btn btn-link" href="{{route('images')}}">Bibliothèque d'image</a></div></li>
+                        <li class="list-group-item"><div class="d-grid gap-2"><a class="btn btn-link" href="{{route('products')}}">Liste des produits</a></li>
+                        <li class="list-group-item"><div class="d-grid gap-2"><a class="btn btn-link" href="{{route('import')}}"><i class="fa-solid fa-file-excel  fa-xl"> </i> Importer des produits</a></div></li>
+                        <li class="list-group-item"><div class="d-grid gap-2"><a class="btn btn-link" href="{{route('export')}}"><i class="fa-solid fa-file-excel fa-xl"> </i> Exporter des produits</a></div></li>
+                        <li class="list-group-item"><div class="d-grid gap-2"><a class="btn btn-link" href="{{route('import')}}"><i class="fa-solid fa-file-csv fa-xl"> </i> Exporter des produits</a></div></li>
+                    </ul>
+                </div>
+                <div id="warper" class="col-md-10">
+                @yield('content')
+                </div>
+                @endguest
+            </div>
+            
+            
         </main>
     </div>
+    <script>
+        function hidnav(){
+            if(document.getElementById('nav').className === "hidden"){
+                document.getElementById('nav').className = "activated col-md-2";
+                document.getElementById('warper').className = "col-md-10";
+
+            }else{
+                document.getElementById('nav').className = "hidden";
+                document.getElementById('warper').className = "col-md-12";
+            }
+            
+            
+        }
+    </script>
 </body>
 </html>

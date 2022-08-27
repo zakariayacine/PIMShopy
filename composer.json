@@ -7,11 +7,14 @@
     "require": {
         "php": "^8.0.2",
         "guzzlehttp/guzzle": "^7.2",
+        "intervention/image": "^2.7",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.0",
+        "league/flysystem-aws-s3-v3": "3.0",
         "maatwebsite/excel": "^3.1",
+        "masbug/flysystem-google-drive-ext": "^2.2",
         "psr/simple-cache": "2.0",
         "spatie/flysystem-dropbox": "^2.0",
         "tinify/tinify": "^1.5"
@@ -20,6 +23,7 @@
         "fakerphp/faker": "^1.9.1",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.0.1",
+        "laravel/telescope": "^4.9",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^6.1",
         "phpunit/phpunit": "^9.5.10",
@@ -54,7 +58,9 @@
     },
     "extra": {
         "laravel": {
-            "dont-discover": []
+            "dont-discover": [
+                "laravel/telescope"
+            ]
         }
     },
     "config": {

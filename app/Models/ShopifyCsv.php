@@ -60,5 +60,7 @@ class ShopifyCsv extends Model
         'PriceInternational',
         'CompareAtPriceInternational',
         'Status',
+        'user_id',
+        'slave',
     ];
 }
